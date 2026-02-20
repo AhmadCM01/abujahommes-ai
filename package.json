@@ -1,0 +1,53 @@
+{
+  "name": "abujahommes-ai",
+  "version": "1.0.0",
+  "description": "AI-powered property pricing and recommendation system for Abuja real estate",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "next": "^14.2.5",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "@types/node": "^20.14.10",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "typescript": "^5.5.3",
+    "tailwindcss": "^3.4.6",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.39",
+    "framer-motion": "^11.3.2",
+    "lucide-react": "^0.400.0",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^2.4.0",
+    "recharts": "^2.12.7",
+    "ml-regression": "^6.0.1",
+    "ml-matrix": "^6.11.0",
+    "papaparse": "^5.4.1",
+    "@types/papaparse": "^5.3.14",
+    "react-hot-toast": "^2.4.1",
+    "react-intersection-observer": "^9.10.3",
+    "zustand": "^4.5.4"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^14.2.5",
+    "@tailwindcss/forms": "^0.5.7",
+    "@tailwindcss/typography": "^0.5.13"
+  },
+  "keywords": [
+    "real-estate",
+    "abuja",
+    "property-pricing",
+    "machine-learning",
+    "ai",
+    "recommendation"
+  ],
+  "author": "AbujaHommes AI Team",
+  "license": "MIT"
+}
