@@ -73,7 +73,7 @@ export default function HomePage() {
       <HeroSection />
 
       {/* Features Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
+      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -81,10 +81,11 @@ export default function HomePage() {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-display font-bold text-gray-900 mb-4">
-              Why Choose <span className="text-gradient">AbujaHommes AI</span>
+
+            <h2 className="text-4xl md:text-5xl font-display font-bold text-charcoal mb-6">
+              Why Choose <span className="text-deep-forest-green">AbujaHommes AI</span>
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xl text-warm-gray max-w-3xl mx-auto mt-6">
               Experience the future of real estate decision-making with our cutting-edge AI technology
             </p>
           </motion.div>
@@ -105,76 +106,68 @@ export default function HomePage() {
       </section>
 
       {/* Main Application Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-deep-forest-green">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-center mb-12"
           >
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-gray-900 mb-4">
-              Start Your Property Journey
-            </h2>
-            <p className="text-lg text-gray-600">
-              Use our AI-powered tools to find your perfect property in Abuja
-            </p>
-          </motion.div>
-
-          {/* Tab Navigation */}
-          <div className="flex flex-wrap justify-center mb-8 gap-2">
-            {tabs.map((tab) => {
-              const Icon = tab.icon;
-              return (
-                <Button
+            {/* Tab Navigation */}
+            <div className="flex flex-wrap justify-center gap-4 mb-12">
+              {tabs.map((tab) => (
+                <motion.button
                   key={tab.id}
-                  variant={activeTab === tab.id ? 'primary' : 'outline'}
-                  size="md"
-                  onClick={() => setActiveTab(tab.id as TabType)}
-                  className="flex items-center gap-2"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`px-6 py-3 rounded-xl font-medium transition-all duration-300 ${
+                    activeTab === tab.id
+                      ? 'bg-white text-deep-forest-green shadow-lg'
+                      : 'bg-transparent border border-white/30 text-white/80 hover:bg-white hover:text-deep-forest-green'
+                  }`}
                 >
-                  <Icon className="w-4 h-4" />
+                  <tab.icon className="w-5 h-5 mr-2" />
                   {tab.label}
-                </Button>
-              );
-            })}
-          </div>
+                </motion.button>
+              ))}
+            </div>
 
-          {/* Tab Content */}
-          <motion.div
-            key={activeTab}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            className="bg-white rounded-2xl shadow-xl p-8"
-          >
-            {activeTab === 'search' && <PropertySearch />}
-            {activeTab === 'calculator' && <PriceCalculator />}
-            {activeTab === 'recommendations' && <Recommendations />}
-            {activeTab === 'insights' && <MarketInsights />}
+            {/* Tab Content */}
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              {activeTab === 'search' && <PropertySearch />}
+              {activeTab === 'calculator' && <PriceCalculator />}
+              {activeTab === 'recommendations' && <Recommendations />}
+              {activeTab === 'insights' && <MarketInsights />}
+            </motion.div>
           </motion.div>
         </div>
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-primary-600 to-primary-700">
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-soft-cream to-subtle-taupe">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
             {[
               { number: '12+', label: 'Locations Covered' },
-              { number: '1000+', label: 'Property Listings' },
-              { number: '95%', label: 'Prediction Accuracy' },
-              { number: '24/7', label: 'AI Assistance' }
+              { number: '500+', label: 'Properties Analyzed' },
+              { number: '95%', label: 'Accuracy Rate' },
+              { number: '24/7', label: 'Market Insights' },
             ].map((stat, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={isLoaded ? { opacity: 1, scale: 1 } : {}}
+                initial={{ opacity: 0, y: 20 }}
+                animate={isLoaded ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="text-white"
               >
-                <div className="text-4xl md:text-5xl font-bold mb-2">{stat.number}</div>
-                <div className="text-lg opacity-90">{stat.label}</div>
+                <div className="text-3xl md:text-4xl font-bold text-deep-forest-green mb-2">{stat.number}</div>
+                <div className="text-warm-gray">{stat.label}</div>
               </motion.div>
             ))}
           </div>

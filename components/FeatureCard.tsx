@@ -17,28 +17,27 @@ export function FeatureCard({ icon: Icon, title, description, color, delay }: Fe
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay }}
-      whileHover={{ y: -5 }}
+      whileHover={{ y: -4 }}
       className="group relative"
     >
-      <div className="premium-card hover-lift h-full">
-        {/* Gradient Background */}
-        <div className={`absolute inset-0 bg-gradient-to-br ${color} opacity-0 group-hover:opacity-10 rounded-2xl transition-all duration-300`} />
-        
-        {/* Icon */}
-        <div className={`inline-flex p-3 rounded-xl bg-gradient-to-br ${color} text-white mb-6 group-hover:scale-110 transition-transform duration-300`}>
-          <Icon className="w-6 h-6" />
+      <div className="bg-soft-cream border border-border-cream rounded-xl shadow-lg p-6 h-full hover:shadow-xl hover:border-warm-gold transition-all duration-300">
+        {/* Icon Container */}
+        <div className="mb-6">
+          <div className="bg-deep-forest-green rounded-full p-3 inline-flex group-hover:scale-110 transition-transform duration-300">
+            <Icon className="w-6 h-6 text-white" />
+          </div>
         </div>
         
         {/* Content */}
-        <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary-700 transition-colors duration-300">
+        <h3 className="text-xl font-bold text-charcoal mb-3 group-hover:text-deep-forest-green transition-colors duration-300">
           {title}
         </h3>
-        <p className="text-gray-600 leading-relaxed">
+        <p className="text-warm-gray leading-relaxed">
           {description}
         </p>
         
         {/* Hover Effect */}
-        <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-primary-200 transition-all duration-300" />
+        <div className="absolute inset-0 rounded-xl border-2 border-transparent group-hover:border-warm-gold transition-all duration-300" />
       </div>
     </motion.div>
   );

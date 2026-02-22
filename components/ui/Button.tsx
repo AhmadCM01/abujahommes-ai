@@ -45,7 +45,7 @@ export const Button: React.FC<ButtonProps> = ({
       whileHover={{ scale: loading ? 1 : 1.02 }}
       whileTap={{ scale: loading ? 1 : 0.98 }}
       transition={{ duration: 0.2 }}
-      {...props}
+      {...(props as any)}
     >
       {loading && (
         <Loader2 className="mr-2 h-4 w-4 animate-spin" />

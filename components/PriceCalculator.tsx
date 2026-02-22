@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Calculator, DollarSign, TrendingUp, Home, MapPin, Info } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
-import { abujaPropertyData, lgas, propertyTypes, bedroomOptions } from '@/data/propertyData';
+import { abujaPropertyData, lgas, lgaWithSubAreas, propertyTypes, bedroomOptions } from '@/data/propertyData';
 import { parsePriceRange, formatPriceRange, calculateInvestmentROI, predictFuturePrice } from '@/utils/priceParser';
 
 export function PriceCalculator() {
@@ -12,6 +12,7 @@ export function PriceCalculator() {
     propertyType: 'rent' as 'rent' | 'house' | 'land',
     location: '',
     lga: '',
+    subArea: '',
     bedrooms: 1,
     budget: 0,
     investmentYears: 5
@@ -103,8 +104,8 @@ export function PriceCalculator() {
     <div className="space-y-8">
       {/* Header */}
       <div className="text-center">
-        <h2 className="text-3xl font-bold text-gray-900 mb-4">AI Price Calculator</h2>
-        <p className="text-gray-600">Get instant property price estimates and investment analysis</p>
+        <h2 className="text-3xl font-bold text-white mb-4">AI Price Calculator</h2>
+        <p className="text-white/80">Get instant property price estimates and investment analysis</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -133,26 +134,42 @@ export function PriceCalculator() {
 
               {/* LGA */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">LGA</label>
+                <label className="block text-sm font-medium text-charcoal mb-2">LGA</label>
                 <select
                   value={calculatorData.lga}
-                  onChange={(e) => setCalculatorData({ ...calculatorData, lga: e.target.value, location: '' })}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  onChange={(e) => setCalculatorData({ ...calculatorData, lga: e.target.value, subArea: '', location: '' })}
+                  className="bg-soft-cream border border-border-cream text-charcoal rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-deep-forest-green focus:border-transparent transition-all duration-300"
                 >
                   <option value="">Select LGA</option>
                   {lgas.map(lga => (
-                    <option key={lga} value={lga}>{lga}</option>
+                    <option key={lga} value={lga}>{lgaWithSubAreas[lga as keyof typeof lgaWithSubAreas]?.name || lga}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Sub-Area */}
+              <div>
+                <label className="block text-sm font-medium text-charcoal mb-2">Sub-Area</label>
+                <select
+                  value={calculatorData.subArea}
+                  onChange={(e) => setCalculatorData({ ...calculatorData, subArea: e.target.value, location: '' })}
+                  className="bg-soft-cream border border-border-cream text-charcoal rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-deep-forest-green focus:border-transparent transition-all duration-300"
+                  disabled={!calculatorData.lga}
+                >
+                  <option value="">Select Sub-Area</option>
+                  {calculatorData.lga && lgaWithSubAreas[calculatorData.lga as keyof typeof lgaWithSubAreas]?.subAreas.map(subArea => (
+                    <option key={subArea} value={subArea}>{subArea}</option>
                   ))}
                 </select>
               </div>
 
               {/* Location */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Specific Location</label>
+                <label className="block text-sm font-medium text-charcoal mb-2">Specific Location</label>
                 <select
                   value={calculatorData.location}
                   onChange={(e) => setCalculatorData({ ...calculatorData, location: e.target.value })}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  className="bg-soft-cream border border-border-cream text-charcoal rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-deep-forest-green focus:border-transparent transition-all duration-300"
                   disabled={!calculatorData.lga}
                 >
                   <option value="">Select Location</option>

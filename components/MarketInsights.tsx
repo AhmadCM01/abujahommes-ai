@@ -108,8 +108,8 @@ export function MarketInsights() {
     <div className="space-y-8">
       {/* Header */}
       <div className="text-center">
-        <h2 className="text-3xl font-bold text-gray-900 mb-4">Market Insights</h2>
-        <p className="text-gray-600">Comprehensive analysis of Abuja's real estate market trends</p>
+        <h2 className="text-3xl font-bold text-white mb-4">Market Insights</h2>
+        <p className="text-white/80">Comprehensive analysis of Abuja's real estate market trends</p>
       </div>
 
       {/* Filters */}

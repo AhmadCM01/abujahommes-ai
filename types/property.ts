@@ -41,6 +41,7 @@ export interface PropertyPrice {
   bedrooms?: number;
   priceRange: PriceRange;
   lastUpdated: Date;
+  aiAnalysis?: string;
 }
 
 export interface SearchFilters {

@@ -208,8 +208,8 @@ export function Recommendations() {
     <div className="space-y-8">
       {/* Header */}
       <div className="text-center">
-        <h2 className="text-3xl font-bold text-gray-900 mb-4">AI Recommendations</h2>
-        <p className="text-gray-600">Get personalized property recommendations based on your preferences</p>
+        <h2 className="text-3xl font-bold text-white mb-4">AI Recommendations</h2>
+        <p className="text-white/80">Get personalized property recommendations based on your preferences</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
