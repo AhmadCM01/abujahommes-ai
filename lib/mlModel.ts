@@ -60,7 +60,9 @@ export class PropertyMLModel {
 
     if (this.features.length > 10) {
       // Use polynomial regression for better fit
-      this.regressionModel = new PolynomialRegression(this.features, this.targets, 2);
+      // Extract first feature (location index) for polynomial regression
+      const xValues = this.features.map(f => f[0]);
+      this.regressionModel = new PolynomialRegression(xValues, this.targets, 2);
       this.calculateMetrics();
     }
   }
@@ -92,9 +94,16 @@ export class PropertyMLModel {
   private calculateMetrics(): void {
     if (!this.regressionModel || this.features.length === 0) return;
 
-    const predictions = this.features.map(features => 
-      this.regressionModel!.predict(features)
-    );
+    const predictions = this.features.map(features => {
+      // Check if it's polynomial regression by checking if it has the 'degree' property
+      if ('degree' in this.regressionModel!) {
+        // For polynomial regression, use only the first feature
+        return this.regressionModel!.predict(features[0]);
+      } else {
+        // For linear regression, use all features
+        return this.regressionModel!.predict(features);
+      }
+    });
 
     // Calculate Mean Squared Error
     const mse = predictions.reduce((acc, pred, i) => {
@@ -145,7 +154,9 @@ export class PropertyMLModel {
       1
     ];
 
-    const prediction = this.regressionModel.predict(features);
+    const prediction = 'degree' in this.regressionModel 
+      ? this.regressionModel.predict(features[0])
+      : this.regressionModel.predict(features);
     return Math.max(0, prediction);
   }
 
