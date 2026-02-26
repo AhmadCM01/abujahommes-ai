@@ -2,6 +2,13 @@ export interface PropertyData {
   location: string;
   lga: string;
   tier: 'premium' | 'prime' | 'mid' | 'emerging' | 'outer' | 'rural';
+  market_category?: string;
+  developer?: string;
+  title_verified?: 'C_of_O' | 'R_of_O' | 'Local_Govt';
+  infrastructure_score?: number;
+  proximity_to_metro?: number;
+  construction_cost_index?: number;
+  data_source?: string;
   rent_selfcontain: string;
   rent_1bed: string;
   rent_2bed: string;
@@ -42,6 +49,12 @@ export interface PropertyPrice {
   priceRange: PriceRange;
   lastUpdated: Date;
   aiAnalysis?: string;
+  mlScore?: number;
+  riskLevel?: string;
+  investmentPotential?: string;
+  developerRating?: string;
+  titleStatus?: string;
+  infrastructureScore?: number;
 }
 
 export interface SearchFilters {
@@ -77,7 +90,7 @@ export interface UserPreferences {
     min: number;
     max: number;
   };
-  propertyType: 'rent' | 'house' | 'land';
+  propertyType: 'rent' | 'house' | 'land' | 'all';
   bedrooms?: number;
   preferredLGAs: string[];
   priorities: {
@@ -107,6 +120,12 @@ export interface PropertyRecommendation {
   insights: string[];
   pros: string[];
   cons: string[];
+  marketFactors?: {
+    demand: number;
+    supply: number;
+    development: number;
+    infrastructure: number;
+  };
 }
 
 export interface InvestmentAnalysis {

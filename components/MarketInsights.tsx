@@ -231,7 +231,7 @@ export function MarketInsights() {
                   <div key={tier.value} className="border rounded-lg p-4">
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center gap-2">
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${tier.color}`}>
+                        <span className="px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                           {tier.label}
                         </span>
                         <span className="text-sm text-gray-600">{tierData.length} locations</span>
@@ -283,7 +283,7 @@ export function MarketInsights() {
                       <div className="flex items-center gap-2 text-sm text-gray-600">
                         <MapPin className="w-4 h-4" />
                         {data.lga}
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${tiers.find(t => t.value === data.tier)?.color}`}>
+                        <span className="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
                           {data.tier}
                         </span>
                       </div>

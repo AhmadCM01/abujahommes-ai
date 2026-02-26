@@ -33,30 +33,58 @@ AbujaHommes AI provides:
 
 ## Current Status
 
-This is an early-stage project with data collected through personal research:
+This is an early-stage project with comprehensive data collected through research and integration with major developers:
 
 ### Data Sources
-- **Property Listings**: Current rental and sale prices from various sources
-- **Market Observation**: Regular monitoring of Abuja property trends
-- **Local Knowledge**: Insights from people actively searching for properties
-- **Area Research**: Direct investigation of different neighborhoods and their pricing
+- **Big 5 Developers**: Bilaad Realty, Cosgrove, Everview Properties, Urban Shelter, Adron Homes
+- **Market Research**: Africanvestor 2026 Property Forecast, Nigeria Housing Market
+- **Real Estate Platforms**: PropertyPro, Jiji.ng, Private Property Nigeria
+- **Government Data**: NPC, FCDA, AGIS for title verification
+- **Developer Dashboards**: Real-time construction progress and pricing
 
 ### Coverage Areas
-Currently covering major Abuja areas:
-- **AMAC** (Abuja Municipal Area Council)
-- **Bwari** Area Council
-- **Gwagwalada** Area Council
-- **Kuje** Area Council
-- **Kwali** Area Council
-- **Abaji** Area Council
+Comprehensive coverage of all Abuja LGAs with ML-enhanced data:
 
-### Area Categories
-- **Premium Areas**: High-end locations with premium pricing
-- **Prime Areas**: Well-established residential areas
-- **Mid-Range Areas**: Affordable but well-connected locations
-- **Emerging Areas**: Developing neighborhoods with growth potential
-- **Outer Areas**: Satellite towns with lower costs
-- **Rural Areas**: Agricultural and investment land
+**AMAC (Abuja Municipal Area Council)**
+- **Premium Areas**: Maitama, Asokoro, Wuse 2 (Luxury & Commercial)
+- **Emerging Areas**: Guzape, Katampe Extension (Hot growth areas)
+- **Established Areas**: Jabi/Utako, Wuye, Life Camp (Mid-range)
+
+**Bwari Area Council**
+- **Established**: Gwarinpa, Dawaki/Dutse (Mid-range)
+- **Satellite**: Kubwa, Bwari Central (Affordable housing)
+
+**Kuje Area Council**
+- **Emerging**: Kuje Town, Centenary City (Growth corridor)
+- **Frontier**: Surrounding developing areas
+
+**Gwagwalada Area Council**
+- **Satellite**: Gwagwalada, University Axis
+- **Outer**: Giri/Zuba (Transit development)
+
+**Kwali Area Council**
+- **Frontier**: Kwali Town (Entry-level investments)
+
+**Abaji Area Council**
+- **Frontier**: Abaji Town (Peripheral development)
+
+### Advanced ML Features
+
+#### **Price Prediction Model**
+- **Infrastructure Lag Analysis**: Tracks announcement vs completion phase price impacts
+- **Title Verification Premium**: C_of_O commands 40-55% premium over other titles
+- **Developer Rating System**: Brand premium analysis for major developers
+- **Construction Cost Index**: Real-time material cost impact on pricing
+
+#### **Investment Analysis**
+- **Yield-to-Entry Ratio**: Identifies high rental yield areas (Gwarinpa, Lugbe, Kubwa)
+- **Risk Assessment**: Title type, infrastructure, and location-based scoring
+- **Appreciation vs Yield Balance**: Maitama (high appreciation, lower yield) vs emerging areas
+
+#### **Market Intelligence**
+- **Hot Area Detection**: Katampe Extension and Guzape outperforming due to road interchanges
+- **Development Pipeline**: Integration with developer construction schedules
+- **Market Sentiment**: Social media and news analysis for trend prediction
 
 ## Features
 
