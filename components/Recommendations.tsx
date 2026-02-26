@@ -694,19 +694,19 @@ export function Recommendations() {
                     <div className="grid grid-cols-2 gap-2 text-xs">
                       <div>
                         <span className="text-green-600">Demand:</span>
-                        <span className="text-green-800 font-medium">{rec.marketFactors.demand}/100</span>
+                        <span className="text-green-800 font-medium">{rec.marketFactors?.demand || 0}/100</span>
                       </div>
                       <div>
                         <span className="text-green-600">Supply:</span>
-                        <span className="text-green-800 font-medium">{rec.marketFactors.supply}/100</span>
+                        <span className="text-green-800 font-medium">{rec.marketFactors?.supply || 0}/100</span>
                       </div>
                       <div>
                         <span className="text-green-600">Development:</span>
-                        <span className="text-green-800 font-medium">{rec.marketFactors.development}/100</span>
+                        <span className="text-green-800 font-medium">{rec.marketFactors?.development || 0}/100</span>
                       </div>
                       <div>
                         <span className="text-green-600">Infrastructure:</span>
-                        <span className="text-green-800 font-medium">{rec.marketFactors.infrastructure}%</span>
+                        <span className="text-green-800 font-medium">{rec.marketFactors?.infrastructure || 0}%</span>
                       </div>
                     </div>
                   </div>
