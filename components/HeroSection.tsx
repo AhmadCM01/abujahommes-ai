@@ -8,6 +8,20 @@ import { Button } from '@/components/ui/Button';
 export function HeroSection() {
   const [searchQuery, setSearchQuery] = useState('');
 
+  const handleSearch = () => {
+    // Scroll to property tools section
+    const toolsSection = document.getElementById('property-tools');
+    if (toolsSection) {
+      toolsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
   const features = [
     { icon: 'ai', label: 'AI-Powered', color: 'text-deep-forest-green' },
     { icon: 'diamond', label: 'Premium', color: 'text-warm-gold' },
@@ -16,10 +30,10 @@ export function HeroSection() {
   ];
 
   const stats = [
-    { icon: 'mansion', value: '12+', label: 'Premium Locations', color: 'text-warm-gold' },
+    { icon: 'mansion', value: '12+', label: 'Locations Covered', color: 'text-warm-gold' },
     { icon: 'building', value: '500+', label: 'Properties Analyzed', color: 'text-deep-forest-green' },
-    { icon: 'ai', value: '95%', label: 'Accuracy Rate', color: 'text-deep-forest-green' },
-    { icon: 'investment', value: '24/7', label: 'Market Insights', color: 'text-warm-gold' },
+    { icon: 'ai', value: '95%', label: 'Data Accuracy', color: 'text-deep-forest-green' },
+    { icon: 'investment', value: '24/7', label: 'AI Insights Available', color: 'text-warm-gold' },
   ];
 
   return (
@@ -77,9 +91,14 @@ export function HeroSection() {
                 placeholder="Search for properties, locations, or get AI recommendations..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyPress={handleKeyPress}
                 className="flex-1 bg-transparent outline-none text-charcoal placeholder:text-placeholder-gray min-w-0"
               />
-              <Button variant="primary" className="bg-deep-forest-green hover:bg-dark-green text-white px-4 sm:px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex-shrink-0">
+              <Button 
+                onClick={handleSearch}
+                variant="primary" 
+                className="bg-deep-forest-green hover:bg-dark-green text-white px-4 sm:px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex-shrink-0"
+              >
                 <span className="hidden sm:inline">Get AI Insights</span>
                 <span className="sm:hidden">Search</span>
               </Button>

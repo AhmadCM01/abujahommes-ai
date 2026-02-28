@@ -14,7 +14,7 @@ export function PriceCalculator() {
     lga: '',
     subArea: '',
     bedrooms: 1,
-    budget: 0,
+    budget: '',
     investmentYears: 5
   });
 
@@ -221,7 +221,7 @@ export function PriceCalculator() {
         }
         
         // Affordability Analysis
-        const affordability = calculatorData.budget > 0 ? (calculatorData.budget / avgPrice) * 100 : 0;
+        const affordability = calculatorData.budget && Number(calculatorData.budget) > 0 ? (Number(calculatorData.budget) / avgPrice) * 100 : 0;
         
         // ML-ENHANCED MARKET INSIGHTS
         const marketInsight = generateMarketInsight(property, calculatorData, avgPrice, roi, riskAnalysis);
@@ -472,7 +472,7 @@ export function PriceCalculator() {
               <input
                 type="number"
                 value={calculatorData.budget}
-                onChange={(e) => setCalculatorData({ ...calculatorData, budget: Number(e.target.value) })}
+                onChange={(e) => setCalculatorData({ ...calculatorData, budget: e.target.value })}
                 placeholder="Enter your budget"
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-deep-forest-green focus:border-transparent transition-all duration-300"
               />

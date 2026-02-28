@@ -12,8 +12,8 @@ import { UserPreferences, PropertyRecommendation } from '@/types/property';
 export function Recommendations() {
   const [preferences, setPreferences] = useState<UserPreferences>({
     budget: {
-      min: 0,
-      max: 100000000 // Default 100M
+      min: '',
+      max: '' // Default empty
     },
     propertyType: 'rent',
     bedrooms: 3,
@@ -84,11 +84,14 @@ export function Recommendations() {
               
               // BUDGET MATCH TEST (30% weight)
               let budgetScore = 0;
-              if (avgPrice >= preferences.budget.min && avgPrice <= preferences.budget.max) {
+              const minBudget = preferences.budget.min ? Number(preferences.budget.min) : 0;
+              const maxBudget = preferences.budget.max ? Number(preferences.budget.max) : Infinity;
+              
+              if (avgPrice >= minBudget && avgPrice <= maxBudget) {
                 budgetScore = 30;
-              } else if (avgPrice <= preferences.budget.max) {
+              } else if (avgPrice <= maxBudget) {
                 budgetScore = 20; // Over budget but close
-              } else if (avgPrice <= preferences.budget.max * 1.2) {
+              } else if (avgPrice <= maxBudget * 1.2) {
                 budgetScore = 10; // Slightly over budget
               }
               
@@ -498,14 +501,14 @@ export function Recommendations() {
               <input
                 type="number"
                 value={preferences.budget.min}
-                onChange={(e) => setPreferences({ ...preferences, budget: { ...preferences.budget, min: Number(e.target.value) } })}
+                onChange={(e) => setPreferences({ ...preferences, budget: { ...preferences.budget, min: e.target.value } })}
                 placeholder="Minimum budget"
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-deep-forest-green"
               />
               <input
                 type="number"
                 value={preferences.budget.max}
-                onChange={(e) => setPreferences({ ...preferences, budget: { ...preferences.budget, max: Number(e.target.value) } })}
+                onChange={(e) => setPreferences({ ...preferences, budget: { ...preferences.budget, max: e.target.value } })}
                 placeholder="Maximum budget"
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-deep-forest-green"
               />

@@ -52,7 +52,6 @@ export interface PropertyPrice {
   mlScore?: number;
   riskLevel?: string;
   investmentPotential?: string;
-  developerRating?: string;
   titleStatus?: string;
   infrastructureScore?: number;
 }
@@ -87,8 +86,8 @@ export interface MLModelMetrics {
 
 export interface UserPreferences {
   budget: {
-    min: number;
-    max: number;
+    min: string | number;
+    max: string | number;
   };
   propertyType: 'rent' | 'house' | 'land' | 'all';
   bedrooms?: number;

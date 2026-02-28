@@ -95,7 +95,6 @@ export function PropertySearch() {
                   mlScore: mlAnalysis.score,
                   riskLevel: mlAnalysis.riskLevel,
                   investmentPotential: mlAnalysis.investmentPotential,
-                  developerRating: property.developer || 'Local Developer',
                   titleStatus: property.title_verified || 'Local_Govt',
                   infrastructureScore: property.infrastructure_score || 50
                 });
@@ -131,7 +130,6 @@ export function PropertySearch() {
                   mlScore: mlAnalysis.score,
                   riskLevel: mlAnalysis.riskLevel,
                   investmentPotential: mlAnalysis.investmentPotential,
-                  developerRating: property.developer || 'Local Developer',
                   titleStatus: property.title_verified || 'Local_Govt',
                   infrastructureScore: property.infrastructure_score || 50
                 });
@@ -161,7 +159,6 @@ export function PropertySearch() {
                 mlScore: mlAnalysis.score,
                 riskLevel: mlAnalysis.riskLevel,
                   investmentPotential: mlAnalysis.investmentPotential,
-                  developerRating: property.developer || 'Local Developer',
                   titleStatus: property.title_verified || 'Local_Govt',
                   infrastructureScore: property.infrastructure_score || 50
                 });
@@ -525,13 +522,6 @@ export function PropertySearch() {
                       <span className="text-xs text-warm-gray">Investment:</span>
                       <span className="text-xs font-medium text-purple-600">
                         {result.investmentPotential || 'Moderate'}
-                      </span>
-                    </div>
-
-                    <div className="flex justify-between items-center">
-                      <span className="text-xs text-warm-gray">Developer:</span>
-                      <span className="text-xs font-medium text-blue-600">
-                        {result.developerRating}
                       </span>
                     </div>
 

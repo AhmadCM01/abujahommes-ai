@@ -4,12 +4,15 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Search, TrendingUp, MapPin, Home, DollarSign, Sparkles, Calculator, BarChart3, Star } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
+import { Navigation } from '@/components/Navigation';
 import { PropertySearch } from '@/components/PropertySearch';
 import { PriceCalculator } from '@/components/PriceCalculator';
 import { Recommendations } from '@/components/Recommendations';
 import { MarketInsights } from '@/components/MarketInsights';
 import { HeroSection } from '@/components/HeroSection';
 import { FeatureCard } from '@/components/FeatureCard';
+import { ContactSection } from '@/components/ContactSection';
+import { Footer } from '@/components/Footer';
 
 type TabType = 'search' | 'calculator' | 'recommendations' | 'insights';
 
@@ -69,11 +72,16 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-primary-50">
+      {/* Navigation */}
+      <Navigation />
+
       {/* Hero Section */}
-      <HeroSection />
+      <section id="home">
+        <HeroSection />
+      </section>
 
       {/* Features Section */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white">
+      <section id="features" className="py-24 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -106,7 +114,7 @@ export default function HomePage() {
       </section>
 
       {/* Main Application Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-deep-forest-green">
+      <section id="property-tools" className="py-16 px-4 sm:px-6 lg:px-8 bg-deep-forest-green">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -156,8 +164,8 @@ export default function HomePage() {
             {[
               { number: '12+', label: 'Locations Covered' },
               { number: '500+', label: 'Properties Analyzed' },
-              { number: '95%', label: 'Accuracy Rate' },
-              { number: '24/7', label: 'Market Insights' },
+              { number: '95%', label: 'Data Accuracy' },
+              { number: '24/7', label: 'AI Insights Available' },
             ].map((stat, index) => (
               <motion.div
                 key={index}
@@ -173,6 +181,12 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Contact Section */}
+      <ContactSection />
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }
