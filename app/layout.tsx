@@ -24,11 +24,20 @@ export const metadata: Metadata = {
     title: 'AbujaHommes AI',
     description: 'AI-powered property pricing and recommendations for Abuja',
   },
+  other: {
+    'mobile-web-app-capable': 'yes',
+    'apple-mobile-web-app-capable': 'yes',
+    'apple-mobile-web-app-status-bar-style': 'default',
+    'apple-mobile-web-app-title': 'AbujaHommes AI',
+  },
 }
 
 export const viewport = {
   width: 'device-width',
   initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  viewportFit: 'cover',
 }
 
 export default function RootLayout({
@@ -39,7 +48,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${bebas.variable} ${playfair.variable}`}>
       <body className="font-sans antialiased">
-        <div className="min-h-screen bg-luxury-900">
+        <div className="min-h-screen bg-soft-cream">
           {children}
         </div>
         <Toaster

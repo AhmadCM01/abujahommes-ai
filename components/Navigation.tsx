@@ -18,19 +18,50 @@ export function Navigation() {
   }, []);
 
   const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setIsOpen(false);
-    }
+    // Close mobile menu first
+    setIsOpen(false);
+    
+    // Wait a moment for the menu to close, then scroll
+    setTimeout(() => {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        const offset = 80; // Account for fixed header height
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - offset;
+        
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+        
+        // Fallback scroll method
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        console.log(`Element with id '${sectionId}' not found`);
+      }
+    }, 100); // Small delay to ensure menu is closed
   };
 
   const scrollToTools = () => {
-    const toolsSection = document.getElementById('property-tools');
-    if (toolsSection) {
-      toolsSection.scrollIntoView({ behavior: 'smooth' });
-      setIsOpen(false);
-    }
+    // Close mobile menu first
+    setIsOpen(false);
+    
+    // Wait a moment for the menu to close, then scroll
+    setTimeout(() => {
+      const toolsSection = document.getElementById('property-tools');
+      if (toolsSection) {
+        const offset = 80; // Account for fixed header height
+        const elementPosition = toolsSection.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - offset;
+        
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      } else {
+        console.log('Property tools section not found');
+      }
+    }, 100); // Small delay to ensure menu is closed
   };
 
   const navItems = [
