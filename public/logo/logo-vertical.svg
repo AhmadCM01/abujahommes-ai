@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 180" fill="none">
+  <!-- Centered Monogram Mark -->
+  <g transform="translate(85, 8)">
+    <path
+      d="M34 28 L24 18 L24 74 L58 40"
+      stroke="#DA9126"
+      stroke-width="10"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M62 64 L72 74 L72 18 L38 52"
+      stroke="#1E5936"
+      stroke-width="10"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </g>
+  <!-- Centered Wordmark -->
+  <text
+    x="130"
+    y="145"
+    text-anchor="middle"
+    font-family="Inter, system-ui, -apple-system, sans-serif"
+    font-size="28"
+    font-weight="700"
+    letter-spacing="-0.5px"
+  >
+    <tspan fill="#1E5936">Abuja</tspan>
+    <tspan fill="#1A1A1A">Hommes</tspan>
+    <tspan fill="#DA9126"> AI</tspan>
+  </text>
+</svg>
