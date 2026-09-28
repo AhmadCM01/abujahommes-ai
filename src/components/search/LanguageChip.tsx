@@ -33,7 +33,7 @@ export const LanguageChip: React.FC<LanguageChipProps> = ({
         </span>
       </div>
       {interpretation && (
-        <span className="text-[#5C5C5C] font-normal border-l border-[#A8C192] pl-2">
+        <span className="text-[#5C5C5C] font-normal border-l border-[#A8C192] pl-2 max-w-[130px] sm:max-w-xs truncate">
           &quot;{interpretation}&quot;
         </span>
       )}

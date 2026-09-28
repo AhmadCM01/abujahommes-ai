@@ -167,13 +167,13 @@ export const NLPSearchBar: React.FC<NLPSearchBarProps> = ({
   return (
     <Card
       elevation="2"
-      className={cn('w-full bg-white rounded-2xl p-5 md:p-6 border border-[#D6C9A8]', className)}
+      className={cn('w-full bg-white rounded-2xl p-4 sm:p-5 md:p-6 border border-[#D6C9A8]', className)}
     >
       <form onSubmit={handleSearch} className="space-y-4">
         {/* Main Search Input Row */}
         <div className="relative flex items-center">
-          <div className="absolute left-4 text-[#2D5A3D] pointer-events-none">
-            <MagnifyingGlass size={24} weight="bold" />
+          <div className="absolute left-3.5 sm:left-4 text-[#2D5A3D] pointer-events-none">
+            <MagnifyingGlass size={22} weight="bold" />
           </div>
           <input
             type="text"
@@ -181,7 +181,7 @@ export const NLPSearchBar: React.FC<NLPSearchBarProps> = ({
             onChange={(e) => setQuery(e.target.value)}
             placeholder={`e.g. "${PLACEHOLDER_EXAMPLES[currentPlaceholderIdx]}"`}
             autoFocus={autoFocus}
-            className="w-full h-14 pl-12 pr-28 md:pr-32 text-sm md:text-base font-medium rounded-xl bg-white border-2 border-[#D6C9A8] focus:border-[#2D5A3D] focus:ring-2 focus:ring-[#2D5A3D]/20 outline-none text-[#1A1A1A] placeholder-[#9A9A9A] transition-all shadow-xs"
+            className="w-full h-12 sm:h-14 pl-10 sm:pl-12 pr-24 sm:pr-32 text-xs sm:text-base font-medium rounded-xl bg-white border-2 border-[#D6C9A8] focus:border-[#2D5A3D] focus:ring-2 focus:ring-[#2D5A3D]/20 outline-none text-[#1A1A1A] placeholder-[#9A9A9A] transition-all shadow-xs"
           />
           <div className="absolute right-2 flex items-center gap-1.5">
             <Button
@@ -189,7 +189,7 @@ export const NLPSearchBar: React.FC<NLPSearchBarProps> = ({
               variant="primary"
               size="md"
               isLoading={isSearching}
-              className="h-10 px-4 md:px-5 font-bold shadow-sm"
+              className="h-9 sm:h-10 px-3.5 sm:px-5 text-xs sm:text-sm font-bold shadow-sm"
             >
               Search
             </Button>
@@ -197,15 +197,15 @@ export const NLPSearchBar: React.FC<NLPSearchBarProps> = ({
         </div>
 
         {/* Transaction Type Pills & Language Detector */}
-        <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
-          <div className="flex items-center gap-1.5 bg-[#F5EDD6] p-1 rounded-xl">
+        <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-3 pt-1">
+          <div className="flex items-center gap-1 sm:gap-1.5 bg-[#F5EDD6] p-1 rounded-xl">
             {(['any', 'rent', 'sale'] as (TransactionType | 'any')[]).map((type) => (
               <button
                 key={type}
                 type="button"
                 onClick={() => setTransactionType(type)}
                 className={cn(
-                  'px-3.5 py-1.5 rounded-lg text-xs font-bold capitalize transition-all select-none',
+                  'px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-lg text-xs font-bold capitalize transition-all select-none',
                   transactionType === type
                     ? 'bg-[#2D5A3D] text-white shadow-xs'
                     : 'text-[#5C5C5C] hover:text-[#1A1A1A]'

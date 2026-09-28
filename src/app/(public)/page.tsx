@@ -3,16 +3,12 @@
 import React from 'react'
 import Link from 'next/link'
 import {
-  Sparkle,
   ShieldCheck,
   TrendUp,
-  HouseSimple,
+  MapPin,
   MagnifyingGlass,
   ArrowRight,
   CheckCircle,
-  Coins,
-  Buildings,
-  Lock,
 } from '@phosphor-icons/react'
 import { Logo } from '@/components/logo/Logo'
 import { NLPSearchBar } from '@/components/search/NLPSearchBar'
@@ -36,7 +32,7 @@ export default function LandingPage() {
           const allActive: PropertyListing[] = data.listings || []
           setTotalListings(data.total || allActive.length)
 
-          // Only prefer rows that have a real images[0] (Storage or valid URL)
+          // Only prefer rows that have genuine image photos
           const withPhotos = allActive.filter(
             (p) =>
               Array.isArray(p.images) &&
@@ -45,8 +41,19 @@ export default function LandingPage() {
               p.images[0].trim().length > 0
           )
 
+          // Prefer low-risk listings; do not promote critical-risk listings in showcase if avoidable
+          const riskRank: Record<string, number> = { low: 0, medium: 1, high: 2, critical: 3 }
+          const nonCritical = withPhotos.filter((p) => p.fraud_risk_level !== 'critical')
+          const candidates = nonCritical.length > 0 ? nonCritical : withPhotos
+
+          const sorted = [...candidates].sort((a, b) => {
+            const rankA = riskRank[a.fraud_risk_level] ?? 1
+            const rankB = riskRank[b.fraud_risk_level] ?? 1
+            return rankA - rankB
+          })
+
           // Show up to 3 listings with photos; do not pad with seed or random art
-          setFeaturedProperties(withPhotos.slice(0, 3))
+          setFeaturedProperties(sorted.slice(0, 3))
         }
       } catch (err) {
         console.error('[LANDING PAGE] Failed to load featured listings:', err)
@@ -60,17 +67,17 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-[#F5EDD6] text-[#1A1A1A] font-sans antialiased overflow-x-hidden">
       {/* Top Public Header */}
-      <header className="sticky top-0 z-40 h-20 bg-white/90 backdrop-blur-md border-b border-[#D6C9A8] px-4 md:px-8 flex items-center justify-between shadow-xs">
+      <header className="sticky top-0 z-40 h-16 sm:h-20 bg-white/90 backdrop-blur-md border-b border-[#D6C9A8] px-3 sm:px-4 md:px-8 flex items-center justify-between shadow-xs">
         <Logo variant="full" href="/" />
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           <Link href="/auth/login">
-            <Button variant="ghost" size="md" className="font-bold text-xs sm:text-sm">
+            <Button variant="ghost" size="sm" className="font-bold text-xs sm:text-sm px-2.5 sm:px-3">
               Sign In
             </Button>
           </Link>
           <Link href="/auth/register">
-            <Button variant="primary" size="md" className="font-bold text-xs sm:text-sm">
+            <Button variant="primary" size="sm" className="font-bold text-xs sm:text-sm px-3 sm:px-4">
               Get Started
             </Button>
           </Link>
@@ -78,27 +85,27 @@ export default function LandingPage() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative px-4 md:px-8 pt-12 md:pt-20 pb-16 max-w-6xl mx-auto text-center space-y-6">
+      <section className="relative px-3 sm:px-4 md:px-8 pt-8 sm:pt-10 md:pt-14 pb-8 md:pb-12 max-w-6xl mx-auto text-center space-y-3.5 sm:space-y-4 md:space-y-5">
         <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#F0F4EC] border border-[#A8C192] text-[#2D5A3D] rounded-full text-xs font-bold shadow-xs">
-          <Sparkle size={14} weight="fill" />
-          <span>Next-Gen Real Estate Intelligence for Abuja</span>
+          <MapPin size={14} weight="fill" />
+          <span>Built for Abuja · FCT only</span>
         </div>
 
-        <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold text-[#1A1A1A] tracking-tight leading-tight max-w-4xl mx-auto">
-          Search Abuja Properties in <span className="text-[#2D5A3D]">Pidgin</span> &amp; <span className="text-[#C9962A]">English</span> with Fair Price AI
+        <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#1A1A1A] tracking-tight leading-tight max-w-4xl mx-auto">
+          Search Abuja Property with <span className="text-[#2D5A3D]">Fair Price Context</span> &amp; <span className="text-[#2D5A3D]">Less Fraud Risk</span>
         </h1>
 
-        <p className="text-sm sm:text-lg text-[#5C5C5C] max-w-2xl mx-auto leading-relaxed">
-          The only property platform built exclusively for Abuja. Accurate valuations, verified C of O titles, and algorithmic fraud detection.
+        <p className="text-xs sm:text-base md:text-lg text-[#5C5C5C] max-w-2xl mx-auto leading-relaxed">
+          Built exclusively for Abuja. Check fair price ranges and listing risk scores across FCT districts before you inspect or pay.
         </p>
 
         {/* Hero Search Bar */}
-        <div className="max-w-3xl mx-auto pt-4 text-left">
+        <div className="max-w-3xl mx-auto pt-1 sm:pt-2 text-left w-full">
           <NLPSearchBar />
         </div>
 
         {/* Live Market Ticker */}
-        <div className="flex flex-wrap items-center justify-center gap-6 pt-6 text-xs text-[#5C5C5C] font-semibold">
+        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 pt-2 text-xs text-[#5C5C5C] font-semibold">
           <div className="flex items-center gap-2">
             <CheckCircle size={18} className="text-[#2D6A4F]" weight="fill" />
             <span>Abuja-only search</span>
@@ -112,79 +119,221 @@ export default function LandingPage() {
             <span>Fair price range</span>
           </div>
         </div>
+
+        {/* Desktop Product Preview: Real Appraisal & Risk Screening (No US Stock Houses) */}
+        <div className="hidden lg:block pt-6 text-left max-w-4xl mx-auto">
+          <div className="bg-white rounded-2xl border border-[#D6C9A8] shadow-md overflow-hidden">
+            {/* Mock App Window Header */}
+            <div className="bg-[#FAF7EE] border-b border-[#D6C9A8] px-4 py-2.5 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="w-2.5 h-2.5 rounded-full bg-[#E57373]" />
+                <div className="w-2.5 h-2.5 rounded-full bg-[#FFB74D]" />
+                <div className="w-2.5 h-2.5 rounded-full bg-[#81C784]" />
+                <span className="text-[11px] font-mono text-[#8F8165] ml-2">
+                  abujahommes-ai.vercel.app/listing/wuse2-amac-492
+                </span>
+              </div>
+              <span className="text-[11px] font-bold text-[#2D5A3D] bg-[#F0F4EC] px-2.5 py-0.5 rounded-full border border-[#A8C192]">
+                Live Appraisal Preview
+              </span>
+            </div>
+
+            {/* Appraisal Content */}
+            <div className="p-6 grid grid-cols-12 gap-6 bg-[#FDFAF4]">
+              {/* Left Column: Property & Price Context (7 cols) */}
+              <div className="col-span-7 space-y-4">
+                <div className="flex items-center gap-2">
+                  <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#2D5A3D] text-white">
+                    AMAC · Wuse 2
+                  </span>
+                  <span className="px-2 py-0.5 rounded-full text-[11px] font-bold bg-white text-[#1A1A1A] border border-[#D6C9A8]">
+                    For Rent
+                  </span>
+                  <span className="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#F5EDD6] text-[#6B5E43]">
+                    Aminu Kano Corridor
+                  </span>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-extrabold text-[#1A1A1A]">
+                    3 Bedroom Serviced Apartment with BQ
+                  </h3>
+                  <div className="flex items-baseline gap-2 mt-1">
+                    <span className="text-2xl font-black text-[#2D5A3D]">
+                      ₦8,500,000
+                    </span>
+                    <span className="text-xs text-[#5C5C5C] font-semibold">/ year</span>
+                  </div>
+                </div>
+
+                {/* Fair Price Range Meter */}
+                <div className="p-3.5 bg-white rounded-xl border border-[#EDE0C4] space-y-2">
+                  <div className="flex items-center justify-between text-xs font-bold">
+                    <span className="text-[#5C5C5C]">Estimated Fair Price Range</span>
+                    <span className="text-[#2D5A3D] bg-[#F0F4EC] px-2 py-0.5 rounded-md font-semibold text-[11px]">
+                      Fair Market Range
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between text-xs font-semibold text-[#1A1A1A]">
+                    <span>₦7,800,000</span>
+                    <span className="text-[11px] text-[#2D5A3D] font-bold">Asking: ₦8.5M</span>
+                    <span>₦9,200,000</span>
+                  </div>
+                  {/* Visual Range Bar */}
+                  <div className="relative h-2.5 bg-[#EDE0C4] rounded-full overflow-hidden">
+                    <div className="absolute left-[15%] right-[15%] h-full bg-[#A8C192] rounded-full" />
+                    <div className="absolute left-[50%] -translate-x-1/2 top-0 bottom-0 w-2.5 bg-[#2D5A3D] rounded-full border border-white" />
+                  </div>
+                  <p className="text-[11px] text-[#7A7A7A] leading-tight">
+                    Benchmark calibrated from recent 3-bedroom serviced rentals in Wuse 2.
+                  </p>
+                </div>
+
+                {/* Features & Title */}
+                <div className="flex items-center gap-3 text-xs text-[#5C5C5C] font-medium pt-1">
+                  <span>3 Beds</span>
+                  <span>·</span>
+                  <span>3 Baths</span>
+                  <span>·</span>
+                  <span>Flat</span>
+                  <span>·</span>
+                  <span className="font-bold text-[#C9962A]">C of O</span>
+                  <span>·</span>
+                  <span>Standby Gen &amp; Security</span>
+                </div>
+              </div>
+
+              {/* Right Column: Listing Risk Screening (5 cols) */}
+              <div className="col-span-5 flex flex-col justify-between p-4 bg-white rounded-xl border border-[#EDE0C4] space-y-3">
+                <div className="space-y-2.5">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-[#1A1A1A] uppercase tracking-wider">
+                      Risk Screening
+                    </span>
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-extrabold bg-[#F0F4EC] text-[#2D5A3D] border border-[#A8C192]">
+                      <ShieldCheck size={14} weight="fill" />
+                      <span>Low Risk · 12/100</span>
+                    </span>
+                  </div>
+
+                  <div className="space-y-2 pt-1">
+                    <div className="flex items-start gap-2 text-[#2D5A3D]">
+                      <CheckCircle size={14} weight="fill" className="shrink-0 mt-0.5" />
+                      <span className="text-[#1A1A1A] text-[11px] leading-snug">
+                        Documented title type matches verified FCDA allocation format
+                      </span>
+                    </div>
+                    <div className="flex items-start gap-2 text-[#2D5A3D]">
+                      <CheckCircle size={14} weight="fill" className="shrink-0 mt-0.5" />
+                      <span className="text-[#1A1A1A] text-[11px] leading-snug">
+                        Asking price within historical Wuse 2 district bounds
+                      </span>
+                    </div>
+                    <div className="flex items-start gap-2 text-[#2D5A3D]">
+                      <CheckCircle size={14} weight="fill" className="shrink-0 mt-0.5" />
+                      <span className="text-[#1A1A1A] text-[11px] leading-snug">
+                        Zero duplicate image matches found across external portals
+                      </span>
+                    </div>
+                    <div className="flex items-start gap-2 text-[#2D5A3D]">
+                      <CheckCircle size={14} weight="fill" className="shrink-0 mt-0.5" />
+                      <span className="text-[#1A1A1A] text-[11px] leading-snug">
+                        Agent identity and contact history cross-checked
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-2 border-t border-[#EDE0C4]">
+                  <p className="text-[10px] text-[#7A7A7A] leading-tight mb-2">
+                    Screened before buyer inspection. Reduces unvetted distress-sale traps.
+                  </p>
+                  <Link href="/dashboard/buyer/search" className="block">
+                    <Button variant="primary" size="sm" className="w-full text-xs font-bold py-1.5">
+                      Explore All Screened Listings
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
-      {/* Featured Properties Showcase (only displayed if loading or active photo listings exist) */}
-      {(loading || featuredProperties.length > 0) && (
-        <section className="px-4 md:px-8 py-12 max-w-7xl mx-auto space-y-6 text-left">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-            <div>
-              <h2 className="text-2xl font-extrabold text-[#1A1A1A]">
-                Featured Abuja Listings
-              </h2>
-              <p className="text-xs text-[#5C5C5C]">
-                Active listings across Maitama, Wuse 2, Gwarinpa, and Guzape
-              </p>
-            </div>
-            <Link
-              href="/dashboard/buyer/search"
-              className="text-xs font-bold text-[#2D5A3D] hover:underline flex items-center gap-1"
-            >
-              <span>Explore All {totalListings > 0 ? `${totalListings} ` : ''}Listings</span>
-              <ArrowRight size={14} weight="bold" />
-            </Link>
+      {/* Featured Properties Showcase */}
+      <section className="px-4 md:px-8 py-10 md:py-14 max-w-7xl mx-auto space-y-6 text-left">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <h2 className="text-xl sm:text-2xl font-extrabold text-[#1A1A1A]">
+              Featured Abuja Listings
+            </h2>
+            <p className="text-xs text-[#5C5C5C]">
+              Screened properties across Maitama, Wuse 2, Gwarinpa, and Guzape
+            </p>
           </div>
+          <Link
+            href="/dashboard/buyer/search"
+            className="text-xs font-bold text-[#2D5A3D] hover:underline flex items-center gap-1"
+          >
+            <span>Explore All {totalListings > 0 ? `${totalListings} ` : ''}Listings</span>
+            <ArrowRight size={14} weight="bold" />
+          </Link>
+        </div>
 
-          <PropertyGrid properties={featuredProperties} isLoading={loading} />
-        </section>
-      )}
+        <PropertyGrid
+          properties={featuredProperties}
+          isLoading={loading}
+          emptyTitle="No featured listings with verified photos yet"
+          emptyDescription="Browse the search directory to view all available Abuja properties across the 6 area councils."
+        />
+      </section>
 
-      {/* 3 Core Value Propositions */}
-      <section className="px-4 md:px-8 py-16 bg-white border-y border-[#D6C9A8]">
-        <div className="max-w-6xl mx-auto space-y-12 text-center">
+      {/* 3 Concrete Product Benefits */}
+      <section className="px-4 md:px-8 py-12 md:py-16 bg-white border-y border-[#D6C9A8]">
+        <div className="max-w-6xl mx-auto space-y-8 md:space-y-12 text-center">
           <div className="space-y-2">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1A1A1A]">
-              Why Abuja Real Estate Runs on AbujaHommes AI
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-[#1A1A1A]">
+              Three Tools for Safer Abuja Property Decisions
             </h2>
             <p className="text-xs sm:text-sm text-[#5C5C5C] max-w-xl mx-auto">
-              Engineered from the ground up to solve pricing opacity and fraudulent listings in the Federal Capital Territory.
+              Structured price benchmarks, automated risk indicators, and search that understands local phrasing.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 text-left">
             <Card elevation="1" className="p-6 bg-[#FDFAF4] border border-[#EDE0C4] space-y-3">
               <div className="w-12 h-12 rounded-xl bg-[#F0F4EC] text-[#2D5A3D] flex items-center justify-center">
-                <Sparkle size={26} weight="fill" />
+                <MagnifyingGlass size={26} weight="bold" />
               </div>
               <h3 className="text-base font-bold text-[#1A1A1A]">
-                Pidgin &amp; Natural Search
+                Natural Language &amp; Pidgin Search
               </h3>
               <p className="text-xs text-[#5C5C5C] leading-relaxed">
-                Describe exactly what you want: &quot;I wan rent flat for Wuse 2 no go pass 800k&quot; and our search assistant accurately extracts budget, beds, and district instantly.
+                Type queries naturally in plain English or Nigerian Pidgin (e.g. &quot;3 bedroom flat for Wuse 2 under 5m&quot;). The search automatically parses your target district, bedroom count, and budget into active filters.
               </p>
             </Card>
 
             <Card elevation="1" className="p-6 bg-[#FDFAF4] border border-[#EDE0C4] space-y-3">
               <div className="w-12 h-12 rounded-xl bg-[#FDF8EC] text-[#C9962A] flex items-center justify-center">
-                <Coins size={26} weight="fill" />
+                <TrendUp size={26} weight="bold" />
               </div>
               <h3 className="text-base font-bold text-[#1A1A1A]">
-                AI Fair Price Prediction
+                District Fair Price Ranges
               </h3>
               <p className="text-xs text-[#5C5C5C] leading-relaxed">
-                Trained on real Abuja market transactions. Know the true fair value of any flat, terrace, or land plot before paying an agent.
+                Every listing is compared against historical transaction data for its specific Abuja district. See whether the asking price is within expected market bounds before negotiating.
               </p>
             </Card>
 
             <Card elevation="1" className="p-6 bg-[#FDFAF4] border border-[#EDE0C4] space-y-3">
-              <div className="w-12 h-12 rounded-xl bg-[#FEE2E2] text-[#C1121F] flex items-center justify-center">
+              <div className="w-12 h-12 rounded-xl bg-[#F0F4EC] text-[#2D5A3D] flex items-center justify-center">
                 <ShieldCheck size={26} weight="fill" />
               </div>
               <h3 className="text-base font-bold text-[#1A1A1A]">
-                Title &amp; Fraud Detection
+                Multi-Point Listing Risk Screening
               </h3>
               <p className="text-xs text-[#5C5C5C] leading-relaxed">
-                Every listing is scored against 7 risk indicators. Fake distress sales, duplicate photos, and bogus titles are caught before you inspect.
+                Listings are screened against 7 common fraud indicators—flagging duplicate photos, unrealistic pricing, and title discrepancies before you schedule an inspection.
               </p>
             </Card>
           </div>
@@ -192,7 +341,7 @@ export default function LandingPage() {
       </section>
 
       {/* Abuja Districts Explorer */}
-      <section className="px-4 md:px-8 py-16 max-w-6xl mx-auto text-left space-y-6">
+      <section className="px-4 md:px-8 py-12 md:py-16 max-w-6xl mx-auto text-left space-y-6">
         <div>
           <h2 className="text-xl sm:text-2xl font-extrabold text-[#1A1A1A]">
             Explore Abuja by Popular Districts
@@ -202,12 +351,12 @@ export default function LandingPage() {
           </p>
         </div>
 
-        <div className="flex flex-wrap gap-2.5">
+        <div className="flex flex-wrap gap-2 sm:gap-2.5">
           {POPULAR_LOCATIONS.map((loc) => (
             <Link
               key={loc}
               href={`/dashboard/buyer/search?location=${encodeURIComponent(loc)}`}
-              className="px-4 py-2 bg-white hover:bg-[#F0F4EC] hover:border-[#2D5A3D] text-[#1A1A1A] hover:text-[#2D5A3D] font-bold text-xs rounded-xl border border-[#D6C9A8] transition-all shadow-xs"
+              className="px-3 sm:px-4 py-2 bg-white hover:bg-[#F0F4EC] hover:border-[#2D5A3D] text-[#1A1A1A] hover:text-[#2D5A3D] font-bold text-xs rounded-xl border border-[#D6C9A8] transition-all shadow-xs"
             >
               {loc}
             </Link>
@@ -215,24 +364,24 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* CTA Footer Banner */}
-      <section className="px-4 md:px-8 py-16 bg-[#2D5A3D] text-white text-center">
-        <div className="max-w-3xl mx-auto space-y-6">
-          <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight">
-            Ready to find your next home in Abuja?
+      {/* Honest Footer CTA */}
+      <section className="px-4 md:px-8 py-12 md:py-16 bg-[#2D5A3D] text-white text-center">
+        <div className="max-w-3xl mx-auto space-y-5 sm:space-y-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight">
+            Search Available Properties or List With AbujaHommes
           </h2>
-          <p className="text-xs sm:text-sm text-white/80 max-w-lg mx-auto">
-            Browse listings with transparent market valuation and fraud risk screening.
+          <p className="text-xs sm:text-sm text-white/80 max-w-lg mx-auto leading-relaxed">
+            Whether you are searching for a rental or listing a property in Abuja, start with clear pricing context and structured listing details.
           </p>
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-3 pt-2 max-w-sm mx-auto">
-            <Link href="/auth/register" className="w-full sm:w-auto">
-              <Button variant="amber" size="lg" className="w-full sm:w-auto font-bold">
-                Get Started Free
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-3 pt-2 max-w-md mx-auto">
+            <Link href="/dashboard/buyer/search" className="w-full sm:w-auto">
+              <Button variant="amber" size="lg" className="w-full sm:w-auto font-bold shadow-md">
+                Search Abuja Properties
               </Button>
             </Link>
-            <Link href="/auth/login" className="w-full sm:w-auto">
+            <Link href="/dashboard/seller/new-listing" className="w-full sm:w-auto">
               <Button variant="outline" size="lg" className="w-full sm:w-auto text-white border-white hover:bg-white/10 font-bold">
-                Sign In
+                List a Property
               </Button>
             </Link>
           </div>
@@ -240,16 +389,16 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#122416] text-white/70 py-12 px-4 md:px-8 text-xs border-t border-[#1E3D29]">
+      <footer className="bg-[#122416] text-white/70 py-10 md:py-12 px-4 md:px-8 text-xs border-t border-[#1E3D29]">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
-          <div className="space-y-2 text-center sm:text-left">
+          <div className="space-y-1.5 text-center sm:text-left">
             <Logo variant="white" width={180} height={42} href="/" />
             <p className="text-[11px] text-white/50">
               Property Intelligence for Abuja · Founded by Ahmad Umar
             </p>
           </div>
 
-          <div className="flex items-center gap-6 font-semibold">
+          <div className="flex flex-wrap justify-center sm:justify-end items-center gap-4 sm:gap-6 font-semibold">
             <Link href="/privacy" className="hover:text-white transition-colors">
               Privacy Policy
             </Link>
