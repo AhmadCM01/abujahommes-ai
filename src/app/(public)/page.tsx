@@ -9,13 +9,30 @@ import {
   MagnifyingGlass,
   ArrowRight,
   CheckCircle,
+  Buildings,
+  Check,
+  Coins,
 } from '@phosphor-icons/react'
 import { Logo } from '@/components/logo/Logo'
 import { NLPSearchBar } from '@/components/search/NLPSearchBar'
 import { PropertyGrid } from '@/components/property/PropertyGrid'
 import { Button, Card } from '@/components/ui'
-import { POPULAR_LOCATIONS } from '@/lib/data/locations'
 import { PropertyListing } from '@/types'
+
+const DISTRICT_ZONES = [
+  {
+    name: 'Prime & Diplomatic (Phase 1)',
+    districts: ['Maitama', 'Asokoro', 'Guzape', 'Wuse 2', 'Garki 2', 'Central Area'],
+  },
+  {
+    name: 'Phase 2 & Lifestyle Enclaves',
+    districts: ['Jabi', 'Utako', 'Mabushi', 'Katampe Extension', 'Life Camp', 'Wuye'],
+  },
+  {
+    name: 'Phase 3 & Key Corridors',
+    districts: ['Gwarinpa', 'Lokogoma', 'Lugbe', 'Kubwa', 'Dawaki', 'Apo'],
+  },
+]
 
 export default function LandingPage() {
   const [featuredProperties, setFeaturedProperties] = React.useState<PropertyListing[]>([])
@@ -65,19 +82,35 @@ export default function LandingPage() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-[#F5EDD6] text-[#1A1A1A] font-sans antialiased overflow-x-hidden">
+    <div className="min-h-screen bg-[#F5EDD6] text-[#1A1A1A] font-sans antialiased overflow-x-hidden selection:bg-[#2D5A3D] selection:text-white">
       {/* Top Public Header */}
-      <header className="sticky top-0 z-40 h-16 sm:h-20 bg-white/90 backdrop-blur-md border-b border-[#D6C9A8] px-3 sm:px-4 md:px-8 flex items-center justify-between shadow-xs">
-        <Logo variant="full" href="/" />
+      <header className="sticky top-0 z-40 h-14 sm:h-20 bg-[#FDFBF7]/95 backdrop-blur-md border-b border-[#D6C9A8]/80 px-3 sm:px-6 md:px-8 flex items-center justify-between shadow-xs transition-all">
+        <Logo variant="full" href="/" className="shrink-0" />
 
-        <div className="flex items-center gap-2 sm:gap-3">
+        {/* Desktop Header Nav Links */}
+        <nav className="hidden md:flex items-center gap-6 text-xs font-bold text-[#5C5C5C]">
+          <Link href="/dashboard/buyer/search" className="hover:text-[#2D5A3D] transition-colors">
+            Search Directory
+          </Link>
+          <a href="#preview" className="hover:text-[#2D5A3D] transition-colors">
+            Appraisal Engine
+          </a>
+          <a href="#benefits" className="hover:text-[#2D5A3D] transition-colors">
+            Risk Scoring
+          </a>
+          <a href="#districts" className="hover:text-[#2D5A3D] transition-colors">
+            Abuja Districts
+          </a>
+        </nav>
+
+        <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
           <Link href="/auth/login">
-            <Button variant="ghost" size="sm" className="font-bold text-xs sm:text-sm px-2.5 sm:px-3">
+            <Button variant="ghost" size="sm" className="font-bold text-xs sm:text-sm px-2 sm:px-3 h-8 sm:h-9">
               Sign In
             </Button>
           </Link>
           <Link href="/auth/register">
-            <Button variant="primary" size="sm" className="font-bold text-xs sm:text-sm px-3 sm:px-4">
+            <Button variant="primary" size="sm" className="font-bold text-xs sm:text-sm px-2.5 sm:px-4 h-8 sm:h-9 shadow-xs">
               Get Started
             </Button>
           </Link>
@@ -85,43 +118,67 @@ export default function LandingPage() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative px-3 sm:px-4 md:px-8 pt-8 sm:pt-10 md:pt-14 pb-8 md:pb-12 max-w-6xl mx-auto text-center space-y-3.5 sm:space-y-4 md:space-y-5">
-        <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#F0F4EC] border border-[#A8C192] text-[#2D5A3D] rounded-full text-xs font-bold shadow-xs">
-          <MapPin size={14} weight="fill" />
+      <section className="relative px-3 sm:px-6 md:px-8 pt-6 sm:pt-10 md:pt-14 pb-8 md:pb-12 max-w-6xl mx-auto text-center space-y-3.5 sm:space-y-4 md:space-y-5">
+        {/* Subtle Ambient Radial Glow for Desktop Depth */}
+        <div className="absolute inset-0 pointer-events-none -z-10 bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,rgba(45,90,61,0.08),transparent_70%)]" />
+
+        {/* Top Location Pill */}
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#F0F4EC] border border-[#A8C192] text-[#2D5A3D] rounded-full text-[11px] sm:text-xs font-bold shadow-xs">
+          <MapPin size={13} weight="fill" className="text-[#2D5A3D]" />
           <span>Built for Abuja · FCT only</span>
         </div>
 
-        <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#1A1A1A] tracking-tight leading-tight max-w-4xl mx-auto">
-          Search Abuja Property with <span className="text-[#2D5A3D]">Fair Price Context</span> &amp; <span className="text-[#2D5A3D]">Less Fraud Risk</span>
+        {/* Main H1 Headline */}
+        <h1 className="text-[26px] xs:text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-extrabold text-[#1A1A1A] tracking-tight leading-[1.18] sm:leading-tight max-w-4xl mx-auto">
+          Search Abuja Property with{' '}
+          <span className="text-[#2D5A3D]">Fair Price Context</span> &amp;{' '}
+          <span className="text-[#C9962A]">Less Fraud Risk</span>
         </h1>
 
-        <p className="text-xs sm:text-base md:text-lg text-[#5C5C5C] max-w-2xl mx-auto leading-relaxed">
+        {/* Subhead */}
+        <p className="text-xs sm:text-sm md:text-base text-[#5C5C5C] max-w-xl mx-auto leading-relaxed px-2">
           Built exclusively for Abuja. Check fair price ranges and listing risk scores across FCT districts before you inspect or pay.
         </p>
 
         {/* Hero Search Bar */}
         <div className="max-w-3xl mx-auto pt-1 sm:pt-2 text-left w-full">
-          <NLPSearchBar />
+          <NLPSearchBar initialExpanded={false} />
         </div>
 
-        {/* Live Market Ticker */}
-        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 pt-2 text-xs text-[#5C5C5C] font-semibold">
-          <div className="flex items-center gap-2">
-            <CheckCircle size={18} className="text-[#2D6A4F]" weight="fill" />
+        {/* Quick District Shortcuts (Tap/Click to Search) */}
+        <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 pt-1 text-xs">
+          <span className="text-[11px] font-bold text-[#8F8165] hidden sm:inline mr-1">
+            Popular:
+          </span>
+          {['Maitama', 'Wuse 2', 'Gwarinpa', 'Guzape', 'Katampe Extension'].map((dist) => (
+            <Link
+              key={dist}
+              href={`/dashboard/buyer/search?location=${encodeURIComponent(dist)}`}
+              className="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-white/80 hover:bg-[#F0F4EC] text-[#5C5C5C] hover:text-[#2D5A3D] border border-[#D6C9A8]/70 transition-all shadow-2xs"
+            >
+              {dist}
+            </Link>
+          ))}
+        </div>
+
+        {/* Live Market Trust Ticks */}
+        <div className="flex flex-wrap items-center justify-center gap-x-5 sm:gap-x-8 gap-y-2 pt-1 text-xs text-[#5C5C5C] font-semibold">
+          <div className="flex items-center gap-1.5">
+            <CheckCircle size={16} className="text-[#2D6A4F]" weight="fill" />
             <span>Abuja-only search</span>
           </div>
-          <div className="flex items-center gap-2">
-            <ShieldCheck size={18} className="text-[#2D6A4F]" weight="fill" />
+          <div className="flex items-center gap-1.5">
+            <ShieldCheck size={16} className="text-[#2D6A4F]" weight="fill" />
             <span>Listing risk score</span>
           </div>
-          <div className="flex items-center gap-2">
-            <TrendUp size={18} className="text-[#2D6A4F]" weight="bold" />
+          <div className="flex items-center gap-1.5">
+            <TrendUp size={16} className="text-[#2D6A4F]" weight="bold" />
             <span>Fair price range</span>
           </div>
         </div>
 
         {/* Desktop Product Preview: Real Appraisal & Risk Screening (No US Stock Houses) */}
-        <div className="hidden lg:block pt-6 text-left max-w-4xl mx-auto">
+        <div id="preview" className="hidden lg:block pt-8 text-left max-w-4xl mx-auto">
           <div className="bg-white rounded-2xl border border-[#D6C9A8] shadow-md overflow-hidden">
             {/* Mock App Window Header */}
             <div className="bg-[#FAF7EE] border-b border-[#D6C9A8] px-4 py-2.5 flex items-center justify-between">
@@ -260,6 +317,51 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* 4-Pillar Market Intelligence Ribbon */}
+      <section className="border-y border-[#D6C9A8]/70 bg-white/60 py-6 px-4 md:px-8">
+        <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 text-left">
+          <div className="p-3 rounded-xl bg-white border border-[#EDE0C4] space-y-1">
+            <div className="flex items-center gap-1.5 text-[#2D5A3D] font-bold text-xs">
+              <Buildings size={16} weight="bold" />
+              <span>6 Area Councils</span>
+            </div>
+            <p className="text-[11px] text-[#5C5C5C] leading-snug">
+              Complete coverage across AMAC, Bwari, Gwagwalada, Kuje, Kwali &amp; Abaji.
+            </p>
+          </div>
+
+          <div className="p-3 rounded-xl bg-white border border-[#EDE0C4] space-y-1">
+            <div className="flex items-center gap-1.5 text-[#2D5A3D] font-bold text-xs">
+              <ShieldCheck size={16} weight="bold" />
+              <span>7 Screening Rules</span>
+            </div>
+            <p className="text-[11px] text-[#5C5C5C] leading-snug">
+              Detects photo reuse, bogus titles, and distress-sale pricing anomalies.
+            </p>
+          </div>
+
+          <div className="p-3 rounded-xl bg-white border border-[#EDE0C4] space-y-1">
+            <div className="flex items-center gap-1.5 text-[#C9962A] font-bold text-xs">
+              <Coins size={16} weight="bold" />
+              <span>District Fair Ranges</span>
+            </div>
+            <p className="text-[11px] text-[#5C5C5C] leading-snug">
+              Know typical rent and sale values in each neighborhood before negotiating.
+            </p>
+          </div>
+
+          <div className="p-3 rounded-xl bg-white border border-[#EDE0C4] space-y-1">
+            <div className="flex items-center gap-1.5 text-[#2D5A3D] font-bold text-xs">
+              <CheckCircle size={16} weight="bold" />
+              <span>English &amp; Pidgin NLP</span>
+            </div>
+            <p className="text-[11px] text-[#5C5C5C] leading-snug">
+              Search naturally: &quot;3-bed for Wuse 2&quot; or formal property specs.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Featured Properties Showcase */}
       <section className="px-4 md:px-8 py-10 md:py-14 max-w-7xl mx-auto space-y-6 text-left">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
@@ -289,7 +391,7 @@ export default function LandingPage() {
       </section>
 
       {/* 3 Concrete Product Benefits */}
-      <section className="px-4 md:px-8 py-12 md:py-16 bg-white border-y border-[#D6C9A8]">
+      <section id="benefits" className="px-4 md:px-8 py-12 md:py-16 bg-white border-y border-[#D6C9A8]">
         <div className="max-w-6xl mx-auto space-y-8 md:space-y-12 text-center">
           <div className="space-y-2">
             <h2 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-[#1A1A1A]">
@@ -341,25 +443,34 @@ export default function LandingPage() {
       </section>
 
       {/* Abuja Districts Explorer */}
-      <section className="px-4 md:px-8 py-12 md:py-16 max-w-6xl mx-auto text-left space-y-6">
+      <section id="districts" className="px-4 md:px-8 py-12 md:py-16 max-w-6xl mx-auto text-left space-y-8">
         <div>
           <h2 className="text-xl sm:text-2xl font-extrabold text-[#1A1A1A]">
-            Explore Abuja by Popular Districts
+            Explore Abuja by Districts &amp; Corridors
           </h2>
           <p className="text-xs text-[#5C5C5C]">
-            Fast search across all primary residential and investment corridors
+            Fast search across primary residential and investment locations in the FCT
           </p>
         </div>
 
-        <div className="flex flex-wrap gap-2 sm:gap-2.5">
-          {POPULAR_LOCATIONS.map((loc) => (
-            <Link
-              key={loc}
-              href={`/dashboard/buyer/search?location=${encodeURIComponent(loc)}`}
-              className="px-3 sm:px-4 py-2 bg-white hover:bg-[#F0F4EC] hover:border-[#2D5A3D] text-[#1A1A1A] hover:text-[#2D5A3D] font-bold text-xs rounded-xl border border-[#D6C9A8] transition-all shadow-xs"
-            >
-              {loc}
-            </Link>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {DISTRICT_ZONES.map((zone) => (
+            <div key={zone.name} className="p-5 bg-white rounded-2xl border border-[#D6C9A8]/80 space-y-3 shadow-xs">
+              <span className="text-xs font-bold text-[#2D5A3D] uppercase tracking-wider block">
+                {zone.name}
+              </span>
+              <div className="flex flex-wrap gap-2">
+                {zone.districts.map((dist) => (
+                  <Link
+                    key={dist}
+                    href={`/dashboard/buyer/search?location=${encodeURIComponent(dist)}`}
+                    className="px-3 py-1.5 bg-[#FDFAF4] hover:bg-[#F0F4EC] hover:border-[#2D5A3D] text-[#1A1A1A] hover:text-[#2D5A3D] font-bold text-xs rounded-xl border border-[#EDE0C4] transition-all"
+                  >
+                    {dist}
+                  </Link>
+                ))}
+              </div>
+            </div>
           ))}
         </div>
       </section>

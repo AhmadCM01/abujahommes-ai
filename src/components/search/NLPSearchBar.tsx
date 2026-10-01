@@ -24,23 +24,25 @@ import { formatNGN, cn } from '@/lib/utils'
 import { LGA, TransactionType } from '@/types'
 
 const PLACEHOLDER_EXAMPLES = [
-  '3 bedroom in Gwarinpa under 2 million',
-  'I wan rent flat for Wuse 2, no go pass 800k',
-  'Quiet house near school in Maitama',
-  '5-bed mansion in Guzape for sale with swimming pool',
-  'Land for sale in Katampe Extension with C of O',
-  'Affordable 2 bedroom apartment in Lokogoma',
+  '3-bed in Gwarinpa under ₦3M',
+  'Flat in Wuse 2, no go pass 800k',
+  'Mansion in Maitama with BQ',
+  '5-bed luxury villa in Guzape',
+  'Commercial space in Central Area',
+  '2-bed flat in Lokogoma',
 ]
 
 export interface NLPSearchBarProps {
   compact?: boolean
   autoFocus?: boolean
+  initialExpanded?: boolean
   className?: string
 }
 
 export const NLPSearchBar: React.FC<NLPSearchBarProps> = ({
   compact = false,
   autoFocus = false,
+  initialExpanded = false,
   className,
 }) => {
   const router = useRouter()
@@ -69,7 +71,7 @@ export const NLPSearchBar: React.FC<NLPSearchBarProps> = ({
   } = useSearchStore()
 
   const [currentPlaceholderIdx, setCurrentPlaceholderIdx] = useState(0)
-  const [showAdvanced, setShowAdvanced] = useState(!compact)
+  const [showAdvanced, setShowAdvanced] = useState(initialExpanded)
 
   // Cycle placeholder every 3 seconds
   useEffect(() => {
@@ -224,10 +226,13 @@ export const NLPSearchBar: React.FC<NLPSearchBarProps> = ({
             <button
               type="button"
               onClick={() => setShowAdvanced(!showAdvanced)}
-              className="flex items-center gap-1 text-xs font-semibold text-[#2D5A3D] hover:underline px-2 py-1"
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-[#2D5A3D] hover:bg-[#F0F4EC] px-2.5 py-1.5 rounded-lg border border-[#A8C192]/60 transition-all select-none shadow-xs"
             >
-              <SlidersHorizontal size={14} />
-              <span>{showAdvanced ? 'Hide filters' : 'More filters'}</span>
+              <SlidersHorizontal size={14} weight="bold" />
+              <span>{showAdvanced ? 'Hide filters' : 'Filters'}</span>
+              {(lga !== 'any' || location || bedrooms !== 'any') && (
+                <span className="w-1.5 h-1.5 rounded-full bg-[#2D5A3D]" />
+              )}
             </button>
           </div>
         </div>

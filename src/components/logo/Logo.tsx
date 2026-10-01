@@ -20,12 +20,12 @@ export const Logo: React.FC<LogoProps> = ({
   className = '',
 }) => {
   // Exact Favicon / Monogram Mark
-  const renderIcon = (isWhite = false, size = 36) => (
+  const renderIcon = (isWhite = false, size = 36, customClass = '') => (
     <svg
       viewBox="0 0 100 100"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="shrink-0"
+      className={cn("shrink-0", customClass)}
       style={{
         width: width ? (variant === 'icon' || variant === 'icon-white' ? width : size) : size,
         height: height ? (variant === 'icon' || variant === 'icon-white' ? height : size) : size,
@@ -74,9 +74,9 @@ export const Logo: React.FC<LogoProps> = ({
 
       case 'white':
         return (
-          <div className={cn('inline-flex items-center gap-2.5 select-none whitespace-nowrap', className)}>
-            {renderIcon(true, 36)}
-            <div className="text-lg sm:text-xl font-bold tracking-tight leading-none whitespace-nowrap">
+          <div className={cn('inline-flex items-center gap-2 sm:gap-2.5 select-none whitespace-nowrap shrink-0', className)}>
+            {renderIcon(true, 30, 'w-7 h-7 sm:w-9 sm:h-9')}
+            <div className="text-base sm:text-xl font-bold tracking-tight leading-none whitespace-nowrap">
               <span className="text-white">Abuja</span>
               <span className="text-[#F5EDD6]">Hommes</span>
               <span className="text-[#F0CC77] font-extrabold"> AI</span>
@@ -87,9 +87,9 @@ export const Logo: React.FC<LogoProps> = ({
       case 'full':
       default:
         return (
-          <div className={cn('inline-flex items-center gap-2.5 select-none whitespace-nowrap', className)}>
-            {renderIcon(false, 36)}
-            <div className="text-lg sm:text-xl font-bold tracking-tight leading-none whitespace-nowrap">
+          <div className={cn('inline-flex items-center gap-2 sm:gap-2.5 select-none whitespace-nowrap shrink-0', className)}>
+            {renderIcon(false, 30, 'w-7 h-7 sm:w-9 sm:h-9')}
+            <div className="text-base sm:text-xl font-bold tracking-tight leading-none whitespace-nowrap">
               <span className="text-[#1E5936]">Abuja</span>
               <span className="text-[#1A1A1A]">Hommes</span>
               <span className="text-[#DA9126] font-extrabold"> AI</span>
